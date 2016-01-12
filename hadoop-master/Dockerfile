@@ -2,7 +2,7 @@ FROM kiwenlau/hadoop-base:0.1.0
 
 MAINTAINER KiwenLau <kiwenlau@gmail.com>
 
-# move all confugration files into container
+# move all configuration files into container
 ADD files/* /tmp/
 
 ENV HADOOP_INSTALL /usr/local/hadoop

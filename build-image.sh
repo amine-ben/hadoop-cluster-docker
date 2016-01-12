@@ -1,6 +1,6 @@
 #!/bin/bash
 
-image=$1
+hadoop_folder="hadoop-2.6.0"
 tag="0.1.0"
 
 if [ $# = 0 ]
@@ -9,12 +9,20 @@ then
 	exit 1
 fi
 
+if [ $# = 2 ]
+then
+	hadoop_folder=$2
+	echo "the hadoop folder you specified is:"$hadoop_folder
+fi
+
+image=$1
+
 
 # founction for delete images
 function docker_rmi()
 {
 	echo -e "\n\nsudo docker rmi kiwenlau/$1:$tag"
-	sudo docker rmi kiwenlau/$1:$tag
+	sudo docker rmi -f kiwenlau/$1:$tag
 }
 
 

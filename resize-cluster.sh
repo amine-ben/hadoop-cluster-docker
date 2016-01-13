@@ -1,15 +1,15 @@
 #!/bin/bash
 
-tag="0.1.0"
-
-# N is the node number of the cluster
-N=$1
-
 if [ $# = 0 ]
 then
 	echo "Please use the node number of the cluster as the argument!"
 	exit 1
 fi
+
+tag="0.1.0"
+
+# N is the node number of the cluster
+N=$1
 
 cd hadoop-master
 

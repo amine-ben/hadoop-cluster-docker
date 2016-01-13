@@ -14,11 +14,11 @@ fi
 cd hadoop-master
 
 # change the slaves file
-echo "master.kiwenlau.com" > files/slaves
+echo "master.mondo.com" > files/slaves
 i=1
 while [ $i -lt $N ]
 do
-	echo "slave$i.kiwenlau.com" >> files/slaves
+	echo "slave$i.mondo.com" >> files/slaves
 	((i++))
 done 
 

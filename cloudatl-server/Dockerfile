@@ -7,7 +7,7 @@ RUN apt-get install -y openssh-server vim
 RUN apt-get install -y openjdk-7-jdk 
 
 # move all configuration files into container
-ADD files/* /usr/local/  
+ADD files/* /root/  
 
 # set jave environment variable 
 ENV JAVA_HOME /usr/lib/jvm/java-7-openjdk-amd64 

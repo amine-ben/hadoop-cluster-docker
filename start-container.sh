@@ -13,7 +13,7 @@ fi
 # delete old master container and start new master container
 sudo docker rm -f master &> /dev/null
 echo "start master container..."
-sudo docker run -d -t --dns 127.0.0.1 -P --name master -h master.mondo.com -w /root kiwenlau/hadoop-master:0.1.0 &> /dev/null
+sudo docker run -d -t --dns 127.0.0.1 -P --name master -h master.mondo.com -w /root amineben/hadoop-master:0.1.0 &> /dev/null
 
 # get the IP address of master container
 FIRST_IP=$(docker inspect --format="{{.NetworkSettings.IPAddress}}" master)
@@ -24,7 +24,7 @@ while [ $i -lt $N ]
 do
 	sudo docker rm -f slave$i &> /dev/null
 	echo "start slave$i container..."
-	sudo docker run -d -t --dns 127.0.0.1 -P --name slave$i -h slave$i.mondo.com -e JOIN_IP=$FIRST_IP kiwenlau/hadoop-slave:0.1.0 &> /dev/null
+	sudo docker run -d -t --dns 127.0.0.1 -P --name slave$i -h slave$i.mondo.com -e JOIN_IP=$FIRST_IP amineben/hadoop-slave &> /dev/null
 	((i++))
 done 
 

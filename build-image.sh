@@ -21,8 +21,8 @@ image=$1
 # founction for delete images
 function docker_rmi()
 {
-	echo -e "\n\nsudo docker rmi kiwenlau/$1:$tag"
-	sudo docker rmi -f kiwenlau/$1:$tag
+	echo -e "\n\nsudo docker rmi amineben/$1"
+	sudo docker rmi -f amineben/$1
 }
 
 
@@ -30,8 +30,8 @@ function docker_rmi()
 function docker_build()
 {
 	cd $1
-	echo -e "\n\nsudo docker build -t kiwenlau/$1:$tag ."
-	/usr/bin/time -f "real  %e" sudo docker build -t kiwenlau/$1:$tag .
+	echo -e "\n\nsudo docker build -t amineben/$1 ."
+	/usr/bin/time -f "real  %e" sudo docker build -t amineben/$1 .
 	cd ..
 }
 
@@ -46,8 +46,12 @@ then
 	docker_rmi hadoop-master
 	docker_rmi hadoop-slave
 	docker_rmi hadoop-base
+	docker_rmi cloudatl-client 
+	docker_rmi cloudatl-server
 	docker_rmi serf-dnsmasq
 	docker_build serf-dnsmasq
+	docker_rmi cloudatl-client 
+	docker_rmi cloudatl-server
 	docker_build hadoop-base
 	docker_build hadoop-master
 	docker_build hadoop-slave 
@@ -63,6 +67,14 @@ elif [ $image == "hadoop-master" ]
 then
 	docker_rmi hadoop-master
 	docker_build hadoop-master
+elif [ $image == "cloudatl-client" ]
+then
+	docker_rmi cloudatl-client
+	docker_build cloudatl-client
+elif [ $image == "cloudatl-server" ]
+then
+	docker_rmi cloudatl-server
+	docker_build cloudatl-server
 elif [ $image == "hadoop-slave" ]
 then
 	docker_rmi hadoop-slave

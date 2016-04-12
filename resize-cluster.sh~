@@ -6,7 +6,7 @@ then
 	exit 1
 fi
 
-tag="latest"
+tag="0.2.0"
 
 # N is the node number of the cluster
 N=$1

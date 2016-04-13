@@ -50,7 +50,7 @@ function docker_build()
 
 echo -e "Removing all containers running on the hadoop-master/slave images"
 
-sudo docker ps -a | grep  amineben/hadoop-* | awk '{print $1 }' | xargs -I {} docker rm {}  
+sudo docker ps -a | grep  amineben/hadoop-* | awk '{print $1 }' | xargs -I {} docker rm -f {}  
 
 sudo docker images >images.txt
 

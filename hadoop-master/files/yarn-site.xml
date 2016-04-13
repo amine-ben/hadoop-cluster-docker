@@ -22,10 +22,10 @@
 </property>
 <property>
     <name>yarn.nodemanager.address</name>
-    <value>master:8050</value>
+    <value>master.mondo.com:8050</value>
 </property>
 <property>
     <name>yarn.nodemanager.localizer.address</name>
-    <value>master:8060</value>
+    <value>master.mondo.com:8060</value>
 </property>
 </configuration>

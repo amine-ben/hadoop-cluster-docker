@@ -1,29 +1,43 @@
 #!/bin/bash
 
+# the script takes two arguments (order should be respected !!!)
 image=$1
-tag="0.1.0"
+tag=$2
 
-if [ $# = 0 ]
+if [ $# < 2 ]
 then
-	echo "Please use image name as the argument!"
+	echo "Please use image name and a tag as the arguments. Note that the order should be respected !"
 	exit 1
 fi
 
 
-# founction for delete images
-function docker_rmi()
+# founctions for delete images
+function docker_rmi_original()
 {
-	echo -e "\n\nsudo docker rmi kiwenlau/$1:$tag"
+	echo -e "\n\nsudo docker rmi kiwenlau/$1:0.1.0"
 	sudo docker rmi -f kiwenlau/$1:$tag
 }
 
+function docker_rmi()
+{
+	echo -e "\n\nsudo docker rmi amineben/$1:$tag"
+	sudo docker rmi -f amineben/$1:$tag
+}
 
-# founction for build images
+# founctions for build images
+function docker_build_original()
+{
+	cd $1
+	echo -e "\n\nsudo docker build -t kiwenlau/$1:0.1.0 ."
+	/usr/bin/time -f "real  %e" sudo docker build -t kiwenlau/$1:0.1.0 .
+	cd ..
+}
+
 function docker_build()
 {
 	cd $1
-	echo -e "\n\nsudo docker build -t kiwenlau/$1:$tag ."
-	/usr/bin/time -f "real  %e" sudo docker build -t kiwenlau/$1:$tag .
+	echo -e "\n\nsudo docker build -t amineben/$1:$tag ."
+	/usr/bin/time -f "real  %e" sudo docker build -t amineben/$1:$tag .
 	cd ..
 }
 
@@ -38,19 +52,19 @@ then
 	docker_rmi hadoop-master
 	docker_rmi hadoop-slave
 	docker_rmi hadoop-base
-	docker_rmi serf-dnsmasq
-	docker_build serf-dnsmasq
-#	docker_build hadoop-base
-#	docker_build hadoop-master
-#	docker_build hadoop-slave 
+	docker_rmi_original serf-dnsmasq
+	docker_build_original serf-dnsmasq
+	docker_build hadoop-base
+	docker_build hadoop-master
+	docker_build hadoop-slave 
 elif [ $image == "hadoop-base" ]
 then
-#	docker_rmi hadoop-master
-#	docker_rmi hadoop-slave
+	docker_rmi hadoop-master
+	docker_rmi hadoop-slave
 	docker_rmi hadoop-base
 	docker_build hadoop-base
-#	docker_build hadoop-master
-#	docker_build hadoop-slave
+	docker_build hadoop-master
+	docker_build hadoop-slave
 elif [ $image == "hadoop-master" ]
 then
 	docker_rmi hadoop-master

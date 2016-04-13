@@ -1,7 +1,7 @@
 #!/bin/bash
 
 hadoop_folder="hadoop-2.6.0"
-tag="0.1.0"
+tag="latest"
 
 if [ $# = 0 ]
 then
@@ -18,26 +18,39 @@ fi
 image=$1
 
 
-# founction for delete images
-function docker_rmi()
+# founctions for delete images
+function docker_rmi_original()
 {
-	echo -e "\n\nsudo docker rmi amineben/$1"
-	sudo docker rmi -f amineben/$1
+	echo -e "\n\nsudo docker rmi kiwenlau/$1:0.1.0"
+	sudo docker rmi -f kiwenlau/$1:$tag
 }
 
+function docker_rmi()
+{
+	echo -e "\n\nsudo docker rmi amineben/$1:$tag"
+	sudo docker rmi -f amineben/$1:$tag
+}
 
-# founction for build images
-function docker_build()
+# founctions for build images
+function docker_build_original()
 {
 	cd $1
-	echo -e "\n\nsudo docker build -t amineben/$1 ."
-	/usr/bin/time -f "real  %e" sudo docker build -t amineben/$1 .
+	echo -e "\n\nsudo docker build -t kiwenlau/$1:0.1.0 ."
+	/usr/bin/time -f "real  %e" sudo docker build -t kiwenlau/$1:0.1.0 .
 	cd ..
 }
 
+function docker_build()
+{
+	cd $1
+	echo -e "\n\nsudo docker build -t amineben/$1:$tag ."
+	/usr/bin/time -f "real  %e" sudo docker build -t amineben/$1:$tag .
+	cd ..
+}
 
-echo -e "\ndocker rm -f slave1 slave2 master"
-sudo docker rm -f slave1 slave2 master
+echo -e "Removing all containers running on the hadoop-master/slave images"
+
+sudo docker ps -a | grep  amineben/hadoop-* | awk '{print $1 }' | xargs -I {} docker rm {}  
 
 sudo docker images >images.txt
 

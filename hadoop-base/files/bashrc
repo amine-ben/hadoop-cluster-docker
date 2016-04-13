@@ -10,6 +10,6 @@ export HADOOP_CONF_DIR=$HADOOP_INSTALL/etc/hadoop
 export YARN_HOME=$HADOOP_INSTALL
 export YARN_CONF_DIR=$HADOOP_INSTALL/etc/hadoop
 export PATH= $PATH:$JAVA_HOME/bin
-export HBASE_HOME=/usr/local
+export HBASE_HOME=/usr/local/hbase
 export HBASE_CONF_DIR=$HBASE_HOME/conf
 export PATH=$PATH:$HBASE_HOME/bin

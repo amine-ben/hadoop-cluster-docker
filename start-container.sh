@@ -26,17 +26,7 @@ do
 	echo "start slave$i container..."
 	sudo docker run -d -t --dns 127.0.0.1 -P  --name slave$i -h slave$i.mondo.com -e JOIN_IP=$FIRST_IP amineben/hadoop-slave &> /dev/null
 	((i++))
-done
- 
-# Launch the atl-client from within 
-sudo docker rm -f client &> /dev/null
-#echo "start client container..."
-#sudo docker run -d -t --dns 127.0.0.1 -P --name client -h client.mondo.com -e JOIN_IP=$FIRST_IP amineben/cloudatl-client &> /dev/null
-
-sudo docker rm -f server &> /dev/null
-#echo "start server container..."
-#sudo docker run -d -t --dns 127.0.0.1 -P --name slave -h server.mondo.com -e JOIN_IP=$FIRST_IP amineben/cloudatl-server &> /dev/null
-
+done 
 
 # create a new Bash session in the master container
 sudo docker exec -it master bash

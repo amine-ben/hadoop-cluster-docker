@@ -36,8 +36,6 @@ cat files/hbase-site.xml.template > files/hbase-site.xml
 # ZK is recommended to have odd number of instances (preferably 3 or 5)
 # we decided to make it 3 if N is lt 10 and 5 otherwise
 
-i=1
-echo "master.mondo.com," >> files/hbase-site.xml
 ZK=0
 if [ $N -lt 10 ]
 then
@@ -45,22 +43,36 @@ then
 else
 	ZK=5
 fi 
-var1=""
+
+#creating the content of the property "hbase.zookeeper.quorum"
+var1=`echo -e "\t<value>master.mondo.com,"` 
+i=1
 while [ $i -lt $ZK ]
 do
-	((i++))
+	
 	var1=$var1"slave$i.mondo.com"
+	((i++))
 	if [ $i -lt $ZK ]
 	then
 	   var1=$var1"," 
 	fi
 done
+
+var1="$var1</value>"
+
 echo $var1 >> files/hbase-site.xml
 ## create the footer of hbase-site.xml
 
-echo -e "</value>\n\t</property>\n</configuration>" >> files/hbase-site.xml
-# delete master container
-sudo docker rm -f master 
+echo -e "\t</property>\n</configuration>" >> files/hbase-site.xml
+
+#copy files to slaves
+cp -i files/regionservers ../hadoop-slave/files/regionservers
+cp -i files/hbase-site.xml ../hadoop-slave/files/hbase-site.xml
+
+
+echo -e "Removing all containers running on the hadoop-master/slave images"
+
+sudo docker ps -a | grep  amineben/hadoop-* | awk '{print $1 }' | xargs -I {} docker rm -f {} 
 
 # delete hadoop-master image
 sudo docker rmi amineben/hadoop-master:$tag 
@@ -68,3 +80,12 @@ sudo docker rmi amineben/hadoop-master:$tag
 # rebuild hadoop-master image
 pwd
 sudo docker build -t amineben/hadoop-master:$tag .
+
+# delete hadoop-master image
+sudo docker rmi amineben/hadoop-slave:$tag 
+
+# rebuild hadoop-master image
+pwd
+sudo docker build -t amineben/hadoop-slave:$tag .
+
+

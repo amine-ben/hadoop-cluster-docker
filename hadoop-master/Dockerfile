@@ -17,8 +17,11 @@ mv /tmp/core-site.xml $HADOOP_INSTALL/etc/hadoop/core-site.xml && \
 mv /tmp/mapred-site.xml $HADOOP_INSTALL/etc/hadoop/mapred-site.xml && \
 mv /tmp/yarn-site.xml $HADOOP_INSTALL/etc/hadoop/yarn-site.xml && \
 mv /tmp/slaves $HADOOP_INSTALL/etc/hadoop/slaves && \
+#rm $HBASE_INSTALL/conf/hdfs-site.xml && \  
+#ln -s $HADOOP_INSTALL/etc/hadoop/hdfs-site.xml $HBASE_INSTALL/conf/ && \ 
+#ln -s $HADOOP_INSTALL/etc/hadoop/core-site.xml $HBASE_INSTALL/conf/ && \
 mv /tmp/hbase-site.xml $HBASE_INSTALL/conf/hbase-site.xml && \ 
-mv /tmp/regionservers $HBASE_INSTALL/regionservers && \
+mv /tmp/regionservers $HBASE_INSTALL/conf/regionservers && \
 mv /tmp/start-hadoop.sh ~/start-hadoop.sh && \
 mv /tmp/run-wordcount.sh ~/run-wordcount.sh && \ 
 mv /tmp/start-ssh-serf.sh ~/start-ssh-serf.sh

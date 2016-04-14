@@ -29,7 +29,7 @@ sed 's@session\s*required\s*pam_loginuid.so@session optional pam_loginuid.so@g' 
 #install hadoop 2.6.0/hbase
 RUN ln -s /usr/local/hadoop-2.6.0 /usr/local/hadoop && \
 ln -s /usr/local/hbase-0.98.13-hadoop2 /usr/local/hbase && \
-ln -s /usr/local/hadoop-2.6.0/etc/hadoop/hdfs-site.xml /usr/local/hbase-0.98.13-hadoop2/conf/ && \
+#ln -s /usr/local/hadoop-2.6.0/etc/hadoop/hdfs-site.xml /usr/local/hbase-0.98.13-hadoop2/conf/ && \
 mv /usr/local/bashrc ~/.bashrc && \
 mv /usr/local/hadoop-env.sh /usr/local/hadoop/etc/hadoop/hadoop-env.sh &&\
 mv /usr/local/hbase-env.sh /usr/local/hbase/conf/hbase-env.sh

@@ -23,10 +23,12 @@ mv /tmp/slaves $HADOOP_INSTALL/etc/hadoop/slaves && \
 mv /tmp/hbase-site.xml $HBASE_INSTALL/conf/hbase-site.xml && \ 
 mv /tmp/regionservers $HBASE_INSTALL/conf/regionservers && \
 mv /tmp/start-hadoop.sh ~/start-hadoop.sh && \
+mv /tmp/stop-hadoop.sh ~/start-hadoop.sh && \
 mv /tmp/run-wordcount.sh ~/run-wordcount.sh && \ 
 mv /tmp/start-ssh-serf.sh ~/start-ssh-serf.sh
 
 RUN chmod +x ~/start-hadoop.sh && \
+chmod +x ~/stop-hadoop.sh && \
 chmod +x ~/run-wordcount.sh && \
 chmod +x ~/start-ssh-serf.sh && \
 chmod 1777 tmp
